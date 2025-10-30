@@ -2,7 +2,7 @@ import { useState } from "react";
 import svgPaths from "../imports/svg-x2q3irg1gd";
 import { INVOICE_TEMPLATES } from "../constants/invoiceData";
 import CreateStripeInvoiceTemplate from "./CreateStripeInvoiceTemplate";
-import { projectId, publicAnonKey } from "../utils/supabase/info";
+import { supabaseAnonKey, supabaseFunctionsBaseUrl } from "../config/env";
 
 interface CreateInvoiceProps {
   isOpen: boolean;
@@ -221,7 +221,7 @@ export default function CreateInvoice({
 
       // First try a health check
       try {
-        const healthResponse = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-6e4d8724/health`, {
+        const healthResponse = await fetch(`${supabaseFunctionsBaseUrl}/make-server-6e4d8724/health`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${publicAnonKey}`,
@@ -243,10 +243,11 @@ export default function CreateInvoice({
         return;
       }
 
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-6e4d8724/invoice-templates`, {
+      const response = await fetch(`${supabaseFunctionsBaseUrl}/make-server-6e4d8724/invoice-templates`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${publicAnonKey}`,
+            'Authorization': `Bearer ${supabaseAnonKey}`,
+          'Authorization': `Bearer ${supabaseAnonKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(templateData),

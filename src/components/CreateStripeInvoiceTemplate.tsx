@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { projectId, publicAnonKey } from "../utils/supabase/info";
+import { supabaseAnonKey, supabaseFunctionsBaseUrl } from "../config/env";
 
 interface CreateStripeInvoiceTemplateProps {
   isOpen: boolean;
@@ -89,7 +89,7 @@ export default function CreateStripeInvoiceTemplate({
 
       // First try a health check to see if server is available
       try {
-        const healthUrl = `https://${projectId}.supabase.co/functions/v1/make-server-6e4d8724/health`;
+        const healthUrl = `${supabaseFunctionsBaseUrl}/make-server-6e4d8724/health`;
         console.log('🏥 Testing server connectivity:', healthUrl);
         
         const healthResponse = await fetch(healthUrl, {
@@ -132,14 +132,15 @@ export default function CreateStripeInvoiceTemplate({
       }
 
       // If server is available, proceed with real API call
-      const url = `https://${projectId}.supabase.co/functions/v1/make-server-6e4d8724/stripe/create-invoice-template`;
+      const url = `${supabaseFunctionsBaseUrl}/make-server-6e4d8724/stripe/create-invoice-template`;
       console.log('🔗 Request URL:', url);
 
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${publicAnonKey}`,
+            'Authorization': `Bearer ${supabaseAnonKey}`,
+          'Authorization': `Bearer ${supabaseAnonKey}`,
         },
         body: JSON.stringify({
           ...templateData,

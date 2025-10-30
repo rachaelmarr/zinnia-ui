@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { ArrowLeft, CreditCard, Lock, Check } from 'lucide-react';
-import { projectId, publicAnonKey } from '../utils/supabase/info';
+import { supabaseAnonKey, supabaseFunctionsBaseUrl } from '../config/env';
 import Header from './Header';
 
 interface CheckoutProps {
@@ -103,11 +103,11 @@ export default function Checkout({ onNavigate, cartItems, onClearCart }: Checkou
     
     try {
       // Create payment intent with Stripe
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-6e4d8724/stripe/create-payment-intent`, {
+      const response = await fetch(`${supabaseFunctionsBaseUrl}/make-server-6e4d8724/stripe/create-payment-intent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${publicAnonKey}`,
+          'Authorization': `Bearer ${supabaseAnonKey}`,
         },
         body: JSON.stringify({
           amount: Math.round(total * 100), // Stripe expects cents

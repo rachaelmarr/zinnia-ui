@@ -3,8 +3,7 @@
 // Supabase client functions for contacts management
 // =========================
 
-import { createClient } from '@supabase/supabase-js';
-import { projectId, publicAnonKey } from '../utils/supabase/info';
+import { supabase } from './supabase';
 import { 
   Contact, 
   ContactWithTags,
@@ -26,11 +25,7 @@ import {
   CreateActivityPayload
 } from '../types/contacts';
 
-// Initialize Supabase client
-const supabase = createClient(
-  `https://${projectId}.supabase.co`,
-  publicAnonKey
-);
+// Supabase client is centralized in src/lib/supabase
 
 // =========================
 // CONTACTS CRUD

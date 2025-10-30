@@ -9,7 +9,7 @@ import {
   AVATAR_OPTIONS
 } from "../types/contacts";
 import { supabase } from "../lib/supabase";
-import { projectId } from "../utils/supabase/info";
+import { supabaseFunctionsBaseUrl } from "../config/env";
 
 interface ContactWizardProps {
   isOpen: boolean;
@@ -136,7 +136,7 @@ async function callAPI(endpoint: string, method: string = 'GET', data?: any) {
 
     console.log('📡 Making API call with access token to:', endpoint);
     
-    const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-6e4d8724${endpoint}`, {
+    const response = await fetch(`${supabaseFunctionsBaseUrl}/make-server-6e4d8724${endpoint}`, {
       method,
       headers: {
         'Content-Type': 'application/json',
@@ -683,7 +683,7 @@ export default function ContactWizard({ isOpen, onClose, onSuccess, onError }: C
     formData.append('file', file);
 
     try {
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-6e4d8724/contacts/upload-photo`, {
+      const response = await fetch(`${supabaseFunctionsBaseUrl}/make-server-6e4d8724/contacts/upload-photo`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${accessToken}`,

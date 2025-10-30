@@ -1,5 +1,15 @@
 import { useState, useEffect } from 'react'
-import { projectId, publicAnonKey } from '../utils/supabase/info'
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+const publicAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+const projectId = (() => {
+  try {
+    const host = new URL(supabaseUrl).hostname
+    return host.split('.')[0] || ''
+  } catch {
+    return ''
+  }
+})()
 
 // Real user type definitions
 interface User {
@@ -29,7 +39,7 @@ interface AuthContextType {
   syncFromLocalStorage: () => void
 }
 
-const API_BASE_URL = `https://${projectId}.supabase.co/functions/v1/make-server-6e4d8724`
+const API_BASE_URL = `${supabaseUrl?.replace(/\/$/, '')}/functions/v1/make-server-6e4d8724`
 
 // Check if Supabase backend is available
 const checkBackendAvailability = async (): Promise<boolean> => {

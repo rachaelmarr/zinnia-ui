@@ -4,7 +4,7 @@ import svgPaths from "../imports/svg-qfq07qodim";
 import paymentsSvgPaths from "../imports/svg-tzzzqf1z1c";
 import CreateInvoice from "./CreateInvoice";
 import { INVOICE_TEMPLATES, SAMPLE_INVOICES } from "../constants/invoiceData";
-import { projectId, publicAnonKey } from "../utils/supabase/info";
+import { supabaseAnonKey, supabaseFunctionsBaseUrl } from "../config/env";
 import Calendar from "../imports/Calendar-126-4615";
 
 interface InvoiceProps {
@@ -841,7 +841,7 @@ export default function Invoice({
   const fetchTemplates = async () => {
     try {
       console.log('📋 Fetching invoice templates...');
-      console.log('🔗 Server URL:', `https://${projectId}.supabase.co/functions/v1/make-server-6e4d8724/invoice-templates`);
+      console.log('🔗 Server URL:', `${supabaseFunctionsBaseUrl}/make-server-6e4d8724/invoice-templates`);
       console.log('🔑 Using projectId:', projectId);
       console.log('🔑 Using publicAnonKey:', publicAnonKey ? 'Present' : 'Missing');
       
@@ -850,7 +850,7 @@ export default function Invoice({
       // First try to check if the server is reachable with a health check
       try {
         console.log('🏥 Testing server connectivity with health check...');
-        const healthResponse = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-6e4d8724/health`, {
+        const healthResponse = await fetch(`${supabaseFunctionsBaseUrl}/make-server-6e4d8724/health`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${publicAnonKey}`,
@@ -869,10 +869,11 @@ export default function Invoice({
         throw new Error(`Server unreachable: ${healthError instanceof Error ? healthError.message : 'Unknown error'}`);
       }
       
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-6e4d8724/invoice-templates`, {
+      const response = await fetch(`${supabaseFunctionsBaseUrl}/make-server-6e4d8724/invoice-templates`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${publicAnonKey}`,
+            'Authorization': `Bearer ${supabaseAnonKey}`,
+          'Authorization': `Bearer ${supabaseAnonKey}`,
           'Content-Type': 'application/json',
         },
       });

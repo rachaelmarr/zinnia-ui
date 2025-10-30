@@ -6,7 +6,7 @@ import { Textarea } from "./ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Separator } from "./ui/separator";
 import { toast } from "sonner@2.0.3";
-import { projectId, publicAnonKey } from '../utils/supabase/info';
+import { supabaseAnonKey, supabaseFunctionsBaseUrl } from '../config/env';
 
 interface InvoiceTemplateCreatorProps {
   onNavigate: (view: string) => void;
@@ -93,11 +93,11 @@ export default function InvoiceTemplateCreator({ onNavigate, onBack }: InvoiceTe
     setSaving(true);
     
     try {
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-6e4d8724/invoice-templates`, {
+      const response = await fetch(`${supabaseFunctionsBaseUrl}/make-server-6e4d8724/invoice-templates`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${publicAnonKey}`
+          'Authorization': `Bearer ${supabaseAnonKey}`
         },
         body: JSON.stringify(templateData)
       });

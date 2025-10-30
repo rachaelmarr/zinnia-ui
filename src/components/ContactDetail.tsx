@@ -7,7 +7,7 @@ import { imgScreenshot20250211At80525Pm2 } from "../imports/svg-ob3rb";
 import VendorLeftNav, { MobileMenuButton } from "./VendorLeftNav";
 import ContactPhoto from "./ContactPhoto";
 import { ContactDetailData, Activity, Note } from "../types/contacts";
-import { projectId } from "../utils/supabase/info";
+import { supabaseFunctionsBaseUrl } from "../config/env";
 import { supabase } from "../lib/supabase";
 
 interface ContactDetailProps {
@@ -281,7 +281,7 @@ export default function ContactDetail({ contactId, onNavigate, onBack }: Contact
       console.log('🔍 Fetching contact detail with token:', accessToken ? 'present' : 'missing');
 
       const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-6e4d8724/contacts/${contactId}/detail`,
+        `${supabaseFunctionsBaseUrl}/make-server-6e4d8724/contacts/${contactId}/detail`,
         {
           method: 'GET',
           headers: {

@@ -1,7 +1,7 @@
-import { projectId, publicAnonKey } from '../utils/supabase/info'
+import { supabaseAnonKey, supabaseFunctionsBaseUrl } from '../config/env'
 
 // Hybrid API layer that falls back to localStorage when Supabase is unavailable
-const API_BASE_URL = `https://${projectId}.supabase.co/functions/v1/make-server-6e4d8724`
+const API_BASE_URL = `${supabaseFunctionsBaseUrl}/make-server-6e4d8724`
 
 interface Listing {
   id: string
@@ -65,7 +65,7 @@ const getFromStorage = (key: string, defaultValue: any = []) => {
 
 // Helper to get access token
 const getAccessToken = (): string => {
-  return localStorage.getItem('zinnia_access_token') || publicAnonKey
+  return localStorage.getItem('zinnia_access_token') || supabaseAnonKey || ''
 }
 
 // Health check with caching
@@ -84,7 +84,7 @@ const checkSupabaseHealth = async (): Promise<boolean> => {
     const response = await fetch(`${API_BASE_URL}/health`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${publicAnonKey}`
+        'Authorization': `Bearer ${supabaseAnonKey}`
       },
       signal: controller.signal
     })
