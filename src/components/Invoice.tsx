@@ -873,7 +873,6 @@ export default function Invoice({
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${supabaseAnonKey}`,
-          'Authorization': `Bearer ${supabaseAnonKey}`,
           'Content-Type': 'application/json',
         },
       });

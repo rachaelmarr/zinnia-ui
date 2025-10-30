@@ -247,7 +247,6 @@ export default function CreateInvoice({
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${supabaseAnonKey}`,
-          'Authorization': `Bearer ${supabaseAnonKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(templateData),

@@ -140,7 +140,6 @@ export default function CreateStripeInvoiceTemplate({
         headers: {
           'Content-Type': 'application/json',
             'Authorization': `Bearer ${supabaseAnonKey}`,
-          'Authorization': `Bearer ${supabaseAnonKey}`,
         },
         body: JSON.stringify({
           ...templateData,
